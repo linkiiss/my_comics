@@ -1,0 +1,373 @@
+:root {
+    --bg-color: #ffffff;
+    --text-primary: #000000;
+    --nav-bg: #111111;
+    --nav-text: #ffffff;
+    --search-bg: #f3e8ff;
+    --badge-bg: #e9d5ff;
+    --tag-green: #86efac;
+    --footer-bg: #333333;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
+main { 
+    flex: 1; 
+    width: 100%; 
+    max-width: 100%; /* Убрали 600px, теперь контейнер на всю ширину */
+    margin: 0; 
+    background: var(--bg-color); 
+    position: relative; 
+}
+#detail-view, #reader-view {
+    max-width: 600px;
+    margin: 0 auto;
+}
+button { background: none; border: none; cursor: pointer; }
+html {
+    width: 100vw; /* Заставляем HTML быть ровно шириной с монитор, игнорируя скроллбар */
+    overflow-x: hidden; /* Прячем горизонтальный скролл, который появится из-за 100vw */
+}
+
+body { 
+    background-color: var(--bg-color); 
+    color: var(--text-primary); 
+    -webkit-tap-highlight-color: transparent; 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh; 
+    
+    /* Дублируем для надежности */
+    width: 100vw; 
+    overflow-x: hidden; 
+}
+/* Навигация и Футер */
+.top-nav { 
+    position: sticky; 
+    top: 0; 
+    background-color: var(--nav-bg); 
+    color: var(--nav-text); 
+    display: flex; 
+    justify-content: space-around; /* Прижимаем всё к левому краю */
+    align-items: center; 
+    padding: 15px 30px; 
+    z-index: 1000; 
+}
+.logo { font-size: 1.2rem; cursor: pointer; font-weight: bold; }
+.nav-controls { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; /* Расстояние между ссылкой "Об Авторе" и поиском */
+}
+.search-input { background-color: var(--search-bg); border: none; padding: 8px 15px; border-radius: 5px; width: 150px; outline: none; }
+.site-footer { background-color: var(--footer-bg); color: #fff; text-align: center; padding: 20px; font-size: 0.9rem; margin-top: auto; }
+
+/* Управление экранами */
+.view { display: none; padding-bottom: 40px; }
+.view.active { display: block; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Карточки на главной */
+.badge-title { background-color: var(--badge-bg); padding: 8px 16px; border-radius: 6px; font-size: 1.2rem; font-weight: 500;}
+/* --- ГЛАВНАЯ СТРАНИЦА: КАРУСЕЛЬ --- */
+.section-heading { 
+    padding: 30px 40px 15px 40px; 
+    text-align: left; /* Принудительно влево */
+}
+
+.carousel-container { 
+    position: relative; 
+    padding: 0 40px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-start; /* Прижимаем карусель влево */
+}
+
+.comic-track { 
+    display: flex; 
+    justify-content: flex-start; /* Карточки выстраиваются слева направо */
+    gap: 20px; 
+    overflow-x: auto; 
+    scroll-behavior: smooth; 
+    padding: 10px 0; 
+    width: 100%;
+    scrollbar-width: none; 
+}
+
+/* Настраиваем ширину под 5 карточек, как на твоем фото */
+.comic-card { 
+    flex: 0 0 calc((100% - 80px) / 5); 
+    min-width: 180px; 
+    cursor: pointer; 
+}
+
+/* Выравниваем текст названия комикса по левому краю */
+.comic-title { 
+    font-size: 1.1rem; 
+    font-weight: 500; 
+    text-align: left; 
+    margin-top: 10px;
+}
+
+/* Стрелки карусели */
+.carousel-arrow {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
+    color: #8b5cf6; 
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.carousel-arrow:hover { background-color: #f9f9f9; }
+
+/* Позиционирование левой и правой стрелки */
+.left-arrow { left: 0; opacity: 0; pointer-events: none; } /* Скрыта по умолчанию, так как мы в начале */
+.right-arrow { right: 0; }
+
+/* Адаптив для мобильных (показываем по 2 карточки, убираем стрелки) */
+@media (max-width: 768px) {
+    .carousel-container { padding: 0 20px; margin-left: 0; }
+    .comic-card { flex: 0 0 calc((100% - 20px) / 2); }
+    .carousel-arrow { display: none; }
+}
+/* Обертка для обложки */
+.cover-wrapper { 
+    position: relative; 
+    width: 100%; 
+    
+    /* УДАЛЯЕМ фиксированную высоту (height: 280px;), если она там есть! */
+    height: auto; 
+    
+    /* ЗАДАЕМ оригинальные пропорции (1620 / 2160 сокращается до 3 / 4) */
+    aspect-ratio: 3 / 4; 
+    
+    border-radius: 8px; 
+    overflow: hidden; 
+    margin-bottom: 10px; 
+}
+
+/* Сама картинка обложки */
+.comic-cover { 
+    width: 100%; 
+    height: 100%; 
+    
+    /* Если используешь тег <img> */
+    object-fit: cover; 
+    
+    /* Если используешь <div style="background-image: url(...)"> */
+    background-size: cover; 
+    background-position: center;
+    
+    display: block;
+}
+.tags-container { position: absolute; top: 10px; right: 0; display: flex; flex-direction: column; gap: 5px; }
+.tag { padding: 4px 8px; font-size: 0.7rem; font-weight: bold; border-radius: 4px 0 0 4px; }
+.tag-purple { background-color: var(--badge-bg); color: #000; }
+.tag-green { background-color: var(--tag-green); color: #000; }
+.comic-title { font-size: 1.1rem; font-weight: 500; text-align: center; }
+
+/* Страница описания */
+.transparent-header { position: absolute; top: 0; width: 100%; padding: 15px; z-index: 10; }
+.black-btn { background: rgba(0,0,0,0.5); color: white; padding: 8px 15px; border-radius: 20px; }
+.series-banner { height: 300px; width: 100%; }
+.series-info { padding: 20px; background: var(--bg-color); border-radius: 20px 20px 0 0; margin-top: -20px; position: relative; z-index: 2; }
+.author { color: #666; font-size: 0.9rem; margin-bottom: 15px; }
+.description { font-size: 0.95rem; line-height: 1.5; color: #333; }
+.episode-list { padding: 0 20px; }
+.episode-row { display: flex; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; cursor: pointer; }
+.ep-thumb { width: 70px; height: 70px; border-radius: 5px; margin-right: 15px; }
+.ep-title { font-weight: 500; font-size: 1rem; }
+.ep-number { margin-left: auto; font-weight: bold; color: #999; }
+
+/* --- РИДЕР --- */
+/* Страница описания остается узкой и по центру */
+#detail-view {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Сам Ридер теперь занимает весь экран и всегда на черном фоне */
+#reader-view {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    background-color: #000;
+    padding-bottom: 0;
+}
+
+/* Ограничиваем до 600px ТОЛЬКО вертикальные вебтуны (Конкордия, Ренпет), чтобы они не растягивались на весь монитор */
+#canvas-container {
+    max-width: 600px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.reader-toolbar { 
+    position: fixed; 
+    left: 0; 
+    right: 0; 
+    width: 100%; 
+    box-sizing: border-box;
+    background-color: rgba(20, 20, 20, 0.95); 
+    color: white; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 15px 30px; 
+    z-index: 1000; 
+    transition: transform 0.3s ease; 
+}
+
+.top-toolbar { top: 0; transform: translateY(-100%); }
+.bottom-toolbar { bottom: 0; transform: translateY(100%); border-top: 1px solid #333; }
+
+/* Условия, при которых панели появляются: 
+   1. Активен общий класс (клик по экрану или старт) 
+   2. Активен класс наведения мыши */
+.reader-ui-active .top-toolbar, 
+.reader-ui-hover-top .top-toolbar { 
+    transform: translateY(0); 
+}
+
+.reader-ui-active .bottom-toolbar, 
+.reader-ui-hover-bottom .bottom-toolbar { 
+    transform: translateY(0); 
+}
+.icon-btn { color: white; font-size: 1rem; padding: 5px 10px; }
+.comic-canvas { width: 100%; display: block; border-bottom: 1px solid #111; }
+
+/* UI Выбора действий (Для Ренпет) */
+.choice-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+    padding: 60px 20px 40px 20px;
+    text-align: center;
+    color: white;
+}
+.choice-btn {
+    display: block;
+    width: 100%;
+    background: var(--search-bg);
+    color: #000;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: transform 0.1s;
+}
+.choice-btn:active { transform: scale(0.98); }
+
+/* --- РЕЖИМ ПОСТРАНИЧНОГО ЧТЕНИЯ --- */
+/* Постраничный контейнер тоже занимает всё доступное место */
+#paged-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    overflow: hidden;
+}
+
+#paged-image {
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: contain; /* Картинка масштабируется, сохраняя пропорции, без обрезки */
+    user-select: none;
+}
+
+/* Невидимые слои поверх картинки для управления */
+.click-zone {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+}
+
+.left-zone { left: 0; width: 30%; cursor: w-resize; } /* Левая треть экрана (назад) */
+.center-zone { left: 30%; width: 40%; cursor: pointer; } /* Центр (меню) */
+.right-zone { right: 0; width: 30%; cursor: e-resize; } /* Правая треть экрана (вперед) */
+
+
+/* --- СКРЫТИЕ СИСТЕМНОГО СКРОЛЛБАРА --- */
+
+/* Для Firefox */
+html, body {
+    scrollbar-width: none; 
+}
+
+/* Для Chrome, Safari, Opera и новых версий Edge */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- КАСТОМНЫЙ СКРОЛЛБАР (БЕЗ СДВИГА ЛЕЙАУТА) --- */
+
+/* Для Firefox: делаем скролл тонким и задаем цвета (ползунок + прозрачный фон) */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--badge-bg) transparent; 
+}
+
+/* Для Chrome, Safari, Edge, Opera */
+::-webkit-scrollbar {
+    width: 6px; /* Очень тонкий, физически почти не занимает места */
+    height: 6px; /* Для горизонтального скролла в карусели комиксов */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Полностью прозрачный трек (создает эффект парения) */
+    margin: 5px; /* Небольшие отступы сверху и снизу */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d8b4fe; /* Красивый светло-фиолетовый цвет под твою светлую тему */
+    border-radius: 10px; /* Мягкие закругленные края */
+}
+
+/* При наведении мыши на сам ползунок делаем его чуть ярче */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a855f7; 
+}
+
+/* Для темной темы (ридера) можно сделать скролл чуть темнее, чтобы не бил по глазам */
+#reader-view::-webkit-scrollbar-thumb {
+    background-color: #555;
+}
+#reader-view::-webkit-scrollbar-thumb:hover {
+    background-color: #777;
+}
+
+
+
+
+/* --- АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ --- */
+@media (max-width: 600px) {
+    .top-nav {
+        flex-wrap: wrap; /* Разрешаем элементам переноситься на новую строку */
+        padding: 15px 20px;
+        gap: 15px;
+    }
+    
+    .nav-controls {
+        width: 100%; /* Блок с меню и поиском занимает всю ширину */
+        justify-content: space-between;
+    }
+    
+    .search-input {
+        flex-grow: 1; /* Поиск растягивается на всё свободное место */
+        margin-left: 15px; /* Отступ от ссылки "Об Авторе" */
+        width: auto;
+    }
+}

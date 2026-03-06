@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои Комиксы</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="top-nav" id="main-header">
+        <div class="logo" onclick="navigateTo('home-view')">Главная</div>
+        <div class="nav-controls">
+            <span class="about-link">Об Авторе</span>
+            <input type="text" class="search-input" id="search-input" placeholder="Поиск">
+        </div>
+    </header>
+
+    <main id="app">
+        <section id="home-view" class="view active">
+            <div class="section-heading">
+                <span class="badge-title">Комиксы</span>
+            </div>
+
+            <div class="carousel-container">
+                <button class="carousel-arrow left-arrow" id="btn-scroll-left" onclick="scrollCarousel(-1)">&#10094;</button>
+                
+                <div class="comic-track" id="comic-track" onscroll="updateCarouselArrows()">
+                    <div class="comic-card" onclick="openComic('concordia')">
+                        <div class="cover-wrapper">
+                            <div class="comic-cover" style="background-image: url('images/concordia_cover.jpg');">"></div>
+                            <div class="tags-container">
+                                <span class="tag tag-purple">интерактивный</span>
+                            </div>
+                        </div>
+                        <h3 class="comic-title">Конкордия на двоих</h3>
+                    </div>
+
+                    <div class="comic-card" onclick="openComic('renpet')">
+                        <div class="cover-wrapper">
+                            <div class="comic-cover" style="background-image: url('images/renpet_cover.jpg');">"></div>
+                            <div class="tags-container">
+                                <span class="tag tag-purple">интерактивный</span>
+                                <span class="tag tag-green">с выбором</span>
+                            </div>
+                        </div>
+                        <h3 class="comic-title">Ренпет</h3>
+                    </div>
+
+                    <div class="comic-card" onclick="openComic('static_comic')">
+                        <div class="cover-wrapper">
+                            <div class="comic-cover" style="background-image: url('images/lifecase_cover.jpg');"></div>
+                            <div class="tags-container">
+                                <span class="tag tag-green">постраничный</span>
+                            </div>
+                        </div>
+                        <h3 class="comic-title">Случай из жизни(Сингл)</h3>
+                    </div>
+                    
+                    </div>
+                
+                <button class="carousel-arrow right-arrow" id="btn-scroll-right" onclick="scrollCarousel(1)">&#10095;</button>
+            </div>
+
+            <div id="no-results" style="display: none; width: 100%; text-align: center; padding: 20px; color: #666;">
+                    Комиксы не найдены
+                </div>
+        </section>
+
+        <section id="detail-view" class="view">
+            <header class="transparent-header">
+                <button class="icon-btn black-btn" onclick="navigateTo('home-view')">← Назад</button>
+            </header>
+            
+            <div id="detail-banner" class="series-banner"></div>
+            
+            <div class="series-info">
+                <h2 id="detail-title">Название</h2>
+                <p class="author">Ангелина Межевникова</p>
+                <p id="detail-desc" class="description">Описание...</p>
+            </div>
+            
+            <div class="episode-list" id="episodes-container">
+                </div>
+        </section>
+
+        <section id="reader-view" class="view reader-ui-active">
+            
+            <div class="reader-toolbar top-toolbar">
+                <button class="icon-btn" onclick="navigateTo('detail-view')">←</button>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <span class="reader-title" id="reader-title">Комикс - Эпизод</span>
+                    <span id="page-counter" style="font-size: 0.8rem; color: #aaa; display: none;">Страница 1 / 10</span>
+                </div>
+                <div style="width: 44px;"></div> </div>
+            
+            <div class="reader-content" id="canvas-container" onclick="toggleReaderUI()">
+                </div>
+
+            <div class="reader-content" id="paged-container" style="display: none;">
+                <img id="paged-image" src="" alt="Страница комикса">
+                
+                <div class="click-zone left-zone" onclick="turnPage(-1, event)"></div>
+                <div class="click-zone center-zone" onclick="toggleReaderUI()"></div>
+                <div class="click-zone right-zone" onclick="turnPage(1, event)"></div>
+            </div>
+
+            <div id="choice-ui" class="choice-overlay" style="display: none;">
+                <h3>Сделай выбор:</h3>
+                <button class="choice-btn" onclick="makeChoice(1)">Пойти за незнакомцем</button>
+                <button class="choice-btn" onclick="makeChoice(2)">Остаться на месте</button>
+            </div>
+
+            <div class="reader-toolbar bottom-toolbar">
+                <button class="icon-btn" id="btn-prev-ep" onclick="goToPrevEpisode(event)">&lt; Пред.</button>
+                <button class="icon-btn" onclick="navigateTo('detail-view')">Оглавление</button>
+                <button class="icon-btn" id="btn-next-ep" onclick="goToNextEpisode(event)">След. &gt;</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="main-footer">
+        Ангелина Межевникова, 2025
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
