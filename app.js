@@ -3,7 +3,7 @@ const comicsDB = {
         title: "Конкордия на двоих",
         desc: "Празднование в честь провозглашения республики может обернуться трагедией. Опытный дознаватель с ... особыми силами объединяется с таинственной девушкой, чтобы узнать, кто планирует терракт и что стоит на кону.",
         color: "#ffb6c1",
-        banner: "assets/concordia_banner.png",
+        banner: "assets/concordia_banner.webp",
         hasChoices: false,
         genre: "Романтика",
         format: "webtoon", 
@@ -11,7 +11,7 @@ const comicsDB = {
             { id: "concordia_ep1", 
                 title: "Пролог", 
                 num: 1, 
-                thumb: "assets/concordia/thumbs/ep1_thumb.png",
+                thumb: "assets/concordia/thumbs/ep1_thumb.webp",
                 content: [
                     { type: "images", start: 1, end: 4 },
                     { type: "scroll-anim", folder: "assets/concordia/concordia_ep1/scroll_scene_1", frames: 18 },
@@ -30,7 +30,7 @@ const comicsDB = {
         title: "Случай из жизни",
         desc: "Все мы наверное боялись, что во время онлайн-конференций в самый... неудобный момент случится так, что микрофон, да еще и камера окажутся включенными? Главному герою этого комикса удалось испытать это на себе...",
         color: "#fdda0d",
-        banner: "assets/lifecase_banner.png",
+        banner: "assets/lifecase_banner.webp",
         hasChoices: false,
         genre: "Повседневность, Комедия",
         format: "paged", 
@@ -40,7 +40,7 @@ const comicsDB = {
                 title: "Сингл", 
                 num: 1, 
                 pagesCount: 11 ,
-                    thumb: "assets/lifecase/thumbs/ep1_thumb.png"
+                    thumb: "assets/lifecase/thumbs/ep1_thumb.webp"
             } 
         ] 
 
@@ -50,12 +50,12 @@ const comicsDB = {
         title: "Механизмы души",
         desc: "В нашем мире, где каждая душа функционирует как часть сложного механизма, существует мастерская, полная чудес и тайн. Здесь работает Часовщик— мудрый творец, который создает и настраивает душу каждого человека, как уникальный часовой механизм. 'Механизмы души' — это история о важности каждой жизни в сложной симфонии существования.",
         color: "#0e263dff",
-        banner: "assets/mecha_souls_banner.png",
+        banner: "assets/mecha_souls_banner.webp",
         hasChoices: false,
         genre: "Философия",
         format: "paged", 
         episodes: [
-            { id: "mecha_souls_ep1", title: "Сингл", num: 1, pagesCount: 7, thumb: "assets/mecha_souls/thumbs/ep1_thumb.png" } // Указываем, сколько страниц
+            { id: "mecha_souls_ep1", title: "Сингл", num: 1, pagesCount: 7, thumb: "assets/mecha_souls/thumbs/ep1_thumb.webp" } // Указываем, сколько страниц
         ]
     },
 
@@ -63,7 +63,7 @@ const comicsDB = {
         title: "Ночной кошмар",
         desc: "Каждую ночь ты просыпаешься от одного и того же кошмара. Надежда на избавление - в странной брошюре и собрании, на которое ты решаешься пойти. Загадочный ведущий и четыре леденящих душу кошмара. Сможешь ли ты продержаться до конца?",
         color: "#62171cff",
-        banner: "assets/nightmares_banner.png",
+        banner: "assets/nightmares_banner.webp",
         hasChoices: false,
         genre: "Ужасы",
         format: "paged", 
@@ -71,10 +71,10 @@ const comicsDB = {
         episodes: [
         { 
             id: "nightmares_ep1", 
-            title: "Глава 1: Приход", 
+            title: "Глава 1: Собрание", 
             num: 1, 
             pagesCount: 10,
-            thumb: "assets/nightmares/thumbs/ep1_thumb.png",
+            thumb: "assets/nightmares/thumbs/ep1_thumb.webp",
             narratives: {
                 2: [
                     { text: "После переезда я каждую ночь <br>просыпаюсь в холодном поту", top: "20%", left: "15%", theme: "narrative-text",},
@@ -135,7 +135,7 @@ const comicsDB = {
             title: "Глава 2: Сон Авы", 
             num: 2, 
             pagesCount: 13,
-            thumb: "assets/nightmares/thumbs/ep2_thumb.png",
+            thumb: "assets/nightmares/thumbs/ep2_thumb.webp",
             narratives: {
             2: [
                 { text: "Это был подъезд нашего старого дома", top: "15%", left: "15%", effect: "static"}, 
@@ -204,7 +204,7 @@ const comicsDB = {
         title: "Глава 3: Сон Ани", 
         num: 3, 
         pagesCount: 17,
-        thumb: "assets/nightmares/thumbs/ep3_thumb.png",
+        thumb: "assets/nightmares/thumbs/ep3_thumb.webp",
         narratives: {
             2: [
                 { text: "У меня есть младший брат Роб", top: "15%", left: "15%", effect: "static"}, 
@@ -311,7 +311,7 @@ const comicsDB = {
             num: 4, 
             pagesCount: 9,
             mainPathEnd: 8,
-            thumb: "assets/nightmares/thumbs/ep4_thumb.png",
+            thumb: "assets/nightmares/thumbs/ep4_thumb.webp",
             narratives: {
             2: [
                 { text: "Во сне я", top: "15%", left: "15%", effect: "static"}, 
@@ -373,7 +373,7 @@ const comicsDB = {
             title: "Глава 5: Твой сон", 
             num: 5, 
             pagesCount: 20,
-            thumb: "assets/nightmares/thumbs/ep5_thumb.png",
+            thumb: "assets/nightmares/thumbs/ep5_thumb.webp",
             locked: true,
             mainPathEnd: 2,
             narratives: {
@@ -505,7 +505,7 @@ const comicsDB = {
             title: "Эпилог", 
             num: 6, 
             pagesCount: 6,
-            thumb: "assets/nightmares/thumbs/ep6_thumb.png",
+            thumb: "assets/nightmares/thumbs/ep6_thumb.webp",
             locked: true,
             narratives: {
             2: [
@@ -1194,7 +1194,7 @@ function renderCurrentPage() {
         tempVideo.onerror = () => applyNewPage(tempVideo.src, true); 
     } else {
         const tempImg = new Image();
-        tempImg.src = `${basePath}/${currentPage}.png`;
+        tempImg.src = `${basePath}/${currentPage}.webp`;
         if ('decode' in tempImg) {
             tempImg.decode()
                 .then(() => applyNewPage(tempImg.src, false))
@@ -1223,7 +1223,7 @@ function renderWebtoonEpisode() {
         if (block.type === 'images') {
             for (let i = block.start; i <= block.end; i++) {
                 const img = document.createElement('img');
-                img.src = `${blockFolder}/${i}.png`; 
+                img.src = `${blockFolder}/${i}.webp`; 
                 img.className = 'webtoon-panel';
                 img.loading = 'lazy'; 
                 container.appendChild(img);
@@ -1372,7 +1372,7 @@ function initDynamicScrollAnimation(canvasId, containerId, path, totalFrames) {
     
     for (let i = 1; i <= totalFrames; i++) {
         const img = new Image();
-        img.src = `${path}/${i}.png`;
+        img.src = `${path}/${i}.webp`;
         img.onload = () => {
             if (i === 1) {
                 canvas.width = img.naturalWidth;
